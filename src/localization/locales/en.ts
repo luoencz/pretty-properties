@@ -8,6 +8,8 @@ export default {
   BANNER_PROPERTY: "Banner property",
   BANNER_FADING: "Banner fading",
   BANNER_HEIGHT: "Banner height",
+  BANNER_HEIGHT_PROPERTY: "Banner height property",
+  BANNER_HEIGHT_PROPERTY_DESC: "Property to set custom banner height per file (in pixels)",
   BANNER_HEIGHT_MOBILE: "Banner height on mobile",
   GAP_AFTER_BANNER: "Gap after banner",
   GAP_AFTER_BANNER_MOBILE: "Gap after banner on mobile",

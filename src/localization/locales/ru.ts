@@ -8,6 +8,8 @@ export default {
   BANNER_PROPERTY: "Свойство баннера",
   BANNER_FADING: "Выцветание баннера",
   BANNER_HEIGHT: "Высота баннера",
+  BANNER_HEIGHT_PROPERTY: "Свойство высоты баннера",
+  BANNER_HEIGHT_PROPERTY_DESC: "Свойство для установки пользовательской высоты баннера для каждого файла (в пикселях)",
   BANNER_HEIGHT_MOBILE: "Высота баннера на мобильном",
   GAP_AFTER_BANNER: "Отступ после баннера",
   GAP_AFTER_BANNER_MOBILE: "Отступ после баннера на мобильном",

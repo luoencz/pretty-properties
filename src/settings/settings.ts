@@ -26,6 +26,7 @@ export interface PPPluginSettings {
     bannerHeight: number;
     bannerHeightMobile: number;
 	bannerHeightPopover: number;
+	bannerHeightProperty: string;
     bannerMargin: number;
 	bannerMarginMobile: number;
     bannerFading: boolean;
@@ -133,6 +134,7 @@ export const DEFAULT_SETTINGS: PPPluginSettings = {
     bannerHeight: 150, 
     bannerHeightMobile: 100,
 	bannerHeightPopover: 100,
+	bannerHeightProperty: "banner_height",
     bannerMargin: -20,
 	bannerMarginMobile: 0,
     bannerFading: true,

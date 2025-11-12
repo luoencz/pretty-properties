@@ -29,6 +29,15 @@ export const renderBanner = async (
     let positionVal = frontmatter[plugin.settings.bannerPositionProperty]
     if (!positionVal) positionVal = 50
 
+    let heightVal = frontmatter[plugin.settings.bannerHeightProperty]
+    // Validate height value
+    if (heightVal !== undefined && heightVal !== null) {
+        heightVal = Number(heightVal)
+        if (isNaN(heightVal) || heightVal < 0) {
+            heightVal = undefined
+        }
+    }
+
     let bannerContainerPreview = contentEl.querySelector(".markdown-reading-view > .markdown-preview-view");
     let bannerContainerSource = contentEl.querySelector(".cm-scroller");
 
@@ -49,17 +58,46 @@ export const renderBanner = async (
     }
 
     let oldBannerValue = oldBannerDivSource?.getAttribute("data-value") || ""
+    let oldHeightValue = oldBannerDivSource?.getAttribute("data-height") || ""
 
     if (bannerVal == oldBannerValue) {
       let oldPositionValue = oldBannerDivSource?.getAttribute("data-position") || ""
-      if (positionVal?.toString() != oldPositionValue) {
+      let positionChanged = positionVal?.toString() != oldPositionValue
+      let heightChanged = (heightVal !== undefined ? heightVal.toString() : "") != oldHeightValue
+      
+      if (positionChanged || heightChanged) {
         let imageSource = oldBannerDivSource?.querySelector("img")
         let imagePreview = oldBannerDivPreview?.querySelector("img")
-        let styles = {"object-position": "center " + positionVal + "%"}
-        imageSource?.setCssStyles(styles)
-        imagePreview?.setCssStyles(styles)
-        oldBannerDivSource?.setAttribute("data-position", positionVal.toString())
-        oldBannerDivPreview?.setAttribute("data-position", positionVal.toString())
+        
+        if (positionChanged) {
+          let styles = {"object-position": "center " + positionVal + "%"}
+          imageSource?.setCssStyles(styles)
+          imagePreview?.setCssStyles(styles)
+          oldBannerDivSource?.setAttribute("data-position", positionVal.toString())
+          oldBannerDivPreview?.setAttribute("data-position", positionVal.toString())
+        }
+        
+        if (heightChanged) {
+          if (heightVal !== undefined) {
+            if (oldBannerDivSource instanceof HTMLElement) {
+              oldBannerDivSource.style.setProperty("height", heightVal + "px")
+              oldBannerDivSource.setAttribute("data-height", heightVal.toString())
+            }
+            if (oldBannerDivPreview instanceof HTMLElement) {
+              oldBannerDivPreview.style.setProperty("height", heightVal + "px")
+              oldBannerDivPreview.setAttribute("data-height", heightVal.toString())
+            }
+          } else {
+            if (oldBannerDivSource instanceof HTMLElement) {
+              oldBannerDivSource.style.removeProperty("height")
+              oldBannerDivSource.removeAttribute("data-height")
+            }
+            if (oldBannerDivPreview instanceof HTMLElement) {
+              oldBannerDivPreview.style.removeProperty("height")
+              oldBannerDivPreview.removeAttribute("data-height")
+            }
+          }
+        }
       }
       return
     }
@@ -67,6 +105,11 @@ export const renderBanner = async (
     let bannerDiv = document.createElement("div");
     bannerDiv.setAttribute("data-value", bannerVal)
     bannerDiv.setAttribute("data-position", positionVal.toString())
+    
+    if (heightVal !== undefined) {
+        bannerDiv.setAttribute("data-height", heightVal.toString())
+        bannerDiv.style.setProperty("height", heightVal + "px")
+    }
 
     bannerDiv.classList.add("banner-image");
 

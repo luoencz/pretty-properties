@@ -48,6 +48,18 @@ export const showBannerSettings = (settingTab: PPSettingTab) => {
             }));
 
         new Setting(containerEl)
+        .setName(i18n.t("BANNER_HEIGHT_PROPERTY"))
+        .setDesc(i18n.t("BANNER_HEIGHT_PROPERTY_DESC"))
+        .addText(text => text
+            .setPlaceholder('banner_height')
+            .setValue(plugin.settings.bannerHeightProperty)
+            .onChange(async (value) => {
+                plugin.settings.bannerHeightProperty = value;
+                await plugin.saveSettings();
+                updateAllBanners(plugin);
+            }));
+
+        new Setting(containerEl)
         .setName(i18n.t("BANNERS_FOLDER"))
         .addText(text => text
             .setValue(plugin.settings.bannersFolder)
